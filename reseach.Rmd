@@ -2,6 +2,9 @@
 title: "Reproducible Report!"
 author: Seyedabbas Shakibajam
 Date: April 29, 2019
+output:
+  md_document:
+    variant: markdown_github
 ---
 # Packages
 You need to install and load these packages
@@ -96,11 +99,11 @@ sum_missing_2 <- sum(is.na(clean_data$steps))
 Now, the total number of rows with steps is `r sum_missing_2`.
 ```{r, echo=T}
 sum_per_day_cleaned <- aggregate(data = clean_data,
-                          steps ~ date,
+                          steps ~ DateTime,
                           FUN = sum)
-colnames(sum_per_day_cleaned) <- c("data", "steps")
-ggplot(sum_per_day_cleaned, aes(x=steps)) +
-  geom_histogram(bins = 60)+
+colnames(sum_per_day_cleaned) <- c("date", "steps")
+ggplot(sum_per_day, aes(x=date, y=steps)) +
+  geom_histogram(stat = "identity")+
   xlab("Number of Steps per Day")+
   ylab("Count")+
   ggtitle("Sum of Number of Steps")

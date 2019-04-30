@@ -151,15 +151,17 @@ Now, the total number of rows with steps is 0.
 
 ``` r
 sum_per_day_cleaned <- aggregate(data = clean_data,
-                          steps ~ date,
+                          steps ~ DateTime,
                           FUN = sum)
-colnames(sum_per_day_cleaned) <- c("data", "steps")
-ggplot(sum_per_day_cleaned, aes(x=steps)) +
-  geom_histogram(bins = 60)+
+colnames(sum_per_day_cleaned) <- c("date", "steps")
+ggplot(sum_per_day, aes(x=date, y=steps)) +
+  geom_histogram(stat = "identity")+
   xlab("Number of Steps per Day")+
   ylab("Count")+
   ggtitle("Sum of Number of Steps")
 ```
+
+    ## Warning: Ignoring unknown parameters: binwidth, bins, pad
 
 ![](reseach_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
