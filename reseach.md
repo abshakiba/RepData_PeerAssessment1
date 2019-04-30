@@ -79,13 +79,13 @@ What is the mean total number of steps per day?
 sum_per_day <- aggregate(data = data,
                           steps ~ DateTime,
                           FUN = sum,
-                          na.rm = F)
+                          drop = F)
 colnames(sum_per_day) <- c("date", "steps")
 ggplot(sum_per_day, aes(x=date, y=steps)) +
   geom_histogram(stat = "identity")+
   xlab("Number of Steps per Day")+
   ylab("Count")+
-  ggtitle("Sum of Number of Steps")
+  ggtitle("Sum of Number of Steps With Missing Values ")
 ```
 
     ## Warning: Ignoring unknown parameters: binwidth, bins, pad
@@ -105,8 +105,7 @@ What is the mean total number of steps per day?
 ``` r
 mean_interval <- aggregate(data = data,
                            steps ~ interval,
-                           FUN = mean,
-                           na.rm = T)
+                           FUN = mean)
 colnames(mean_interval) <- c("interval", "steps")
 ggplot(mean_interval, aes(x=interval, y=steps))+
   geom_line()+
@@ -121,7 +120,7 @@ ggplot(mean_interval, aes(x=interval, y=steps))+
 max_interval <- mean_interval[mean_interval$steps >= max(mean_interval$steps),]$interval
 ```
 
-As you see, interval 835 has the maximum number of steps on average.
+As you see, interval 835 has the maximum number of steps on average .
 
 Imputing Missing Values
 -----------------------
@@ -154,11 +153,11 @@ sum_per_day_cleaned <- aggregate(data = clean_data,
                           steps ~ DateTime,
                           FUN = sum)
 colnames(sum_per_day_cleaned) <- c("date", "steps")
-ggplot(sum_per_day, aes(x=date, y=steps)) +
+ggplot(sum_per_day_cleaned, aes(x=date, y=steps)) +
   geom_histogram(stat = "identity")+
   xlab("Number of Steps per Day")+
   ylab("Count")+
-  ggtitle("Sum of Number of Steps")
+  ggtitle("Sum of Number of Steps Without Missing Values")
 ```
 
     ## Warning: Ignoring unknown parameters: binwidth, bins, pad

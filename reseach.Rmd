@@ -5,6 +5,8 @@ Date: April 29, 2019
 output:
   md_document:
     variant: markdown_github
+  rmd_document:
+    variant: markdown_github
 ---
 # Packages
 You need to install and load these packages
@@ -43,13 +45,13 @@ str(data)
 sum_per_day <- aggregate(data = data,
                           steps ~ DateTime,
                           FUN = sum,
-                          na.rm = F)
+                          drop = F)
 colnames(sum_per_day) <- c("date", "steps")
 ggplot(sum_per_day, aes(x=date, y=steps)) +
   geom_histogram(stat = "identity")+
   xlab("Number of Steps per Day")+
   ylab("Count")+
-  ggtitle("Sum of Number of Steps")
+  ggtitle("Sum of Number of Steps With Missing Values ")
 ```
 ```{r, echo=T}
 mean_per_day <- as.integer(mean(sum_per_day$steps))
@@ -61,8 +63,7 @@ As you see, the mean and median of total number of teps taken per day are `r mea
 ```{r, echo=T}
 mean_interval <- aggregate(data = data,
                            steps ~ interval,
-                           FUN = mean,
-                           na.rm = T)
+                           FUN = mean)
 colnames(mean_interval) <- c("interval", "steps")
 ggplot(mean_interval, aes(x=interval, y=steps))+
   geom_line()+
@@ -75,7 +76,7 @@ ggplot(mean_interval, aes(x=interval, y=steps))+
 max_interval <- mean_interval[mean_interval$steps >= max(mean_interval$steps),]$interval
 
 ```
-As you see, interval `r max_interval` has the maximum number of steps on average.
+As you see, interval `r max_interval` has the maximum number of steps on average .
 
 ## Imputing Missing Values
 ```{r, echo=T}
@@ -102,11 +103,11 @@ sum_per_day_cleaned <- aggregate(data = clean_data,
                           steps ~ DateTime,
                           FUN = sum)
 colnames(sum_per_day_cleaned) <- c("date", "steps")
-ggplot(sum_per_day, aes(x=date, y=steps)) +
+ggplot(sum_per_day_cleaned, aes(x=date, y=steps)) +
   geom_histogram(stat = "identity")+
   xlab("Number of Steps per Day")+
   ylab("Count")+
-  ggtitle("Sum of Number of Steps")
+  ggtitle("Sum of Number of Steps Without Missing Values")
 ```
 ```{r, echo=T}
 mean_per_day_cleaned <- as.integer(mean(sum_per_day_cleaned$steps))
