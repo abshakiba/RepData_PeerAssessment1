@@ -77,16 +77,18 @@ What is the mean total number of steps per day?
 
 ``` r
 sum_per_day <- aggregate(data = data,
-                          steps ~ date,
+                          steps ~ DateTime,
                           FUN = sum,
                           na.rm = F)
-colnames(sum_per_day) <- c("data", "steps")
-ggplot(sum_per_day, aes(x=steps)) +
-  geom_histogram(bins = 60)+
+colnames(sum_per_day) <- c("date", "steps")
+ggplot(sum_per_day, aes(x=date, y=steps)) +
+  geom_histogram(stat = "identity")+
   xlab("Number of Steps per Day")+
   ylab("Count")+
   ggtitle("Sum of Number of Steps")
 ```
+
+    ## Warning: Ignoring unknown parameters: binwidth, bins, pad
 
 ![](reseach_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
